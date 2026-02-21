@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARX | Follow Us & Community</title>
+<meta name="description" content="Follow ARX Price & Time across all platforms. Join the community, access free resources and stay connected.">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --page:#050505;--card:#0a0a0e;
+  --a:#a855f7;--a2:#7c3aed;--a3:#c084fc;--a4:#6d28d9;
+  --text:rgba(255,255,255,.92);--muted:rgba(255,255,255,.50);--dim:rgba(255,255,255,.28);
+  --line:rgba(168,85,247,.15);--ticker-h:46px;--nav-h:66px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--page);color:var(--text);font-family:'Outfit',sans-serif;
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.bg-ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% -5%,rgba(168,85,247,.18) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 5% 40%,rgba(124,58,237,.10) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 30%,rgba(109,40,217,.09) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 110%,rgba(124,58,237,.08) 0%,transparent 60%)}
+.bg-grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.38;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  background-size:256px}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.016;
+  background-image:linear-gradient(rgba(168,85,247,1) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,1) 1px,transparent 1px);
+  background-size:80px 80px}
+
+/* ══ TICKER ══ */
+#arx-ticker{position:sticky;top:0;z-index:9999;width:100%;overflow:hidden;
+  background:rgba(5,5,5,.92);backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);box-shadow:0 0 50px rgba(168,85,247,.12)}
+.ticker-inner{height:var(--ticker-h);display:flex;align-items:center;gap:10px;padding:0 16px}
+.ticker-badge{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;
+  height:28px;padding:0 12px;border-radius:999px;
+  background:rgba(168,85,247,.11);border:1px solid rgba(168,85,247,.28);
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--a3)}
+.ticker-badge .dot{width:6px;height:6px;border-radius:50%;
+  background:var(--a);box-shadow:0 0 7px var(--a);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.22}}
+.ticker-marquee{flex:1;overflow:hidden}
+.ticker-track{display:inline-flex;align-items:center;animation:ticker-scroll 34s linear infinite}
+#arx-ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 13px;
+  margin-right:8px;border-radius:999px;border:1px solid rgba(168,85,247,.17);
+  background:rgba(0,0,0,.18);color:var(--text);font-size:12px;text-decoration:none;
+  transition:.15s ease;white-space:nowrap}
+.ticker-item:hover{border-color:rgba(168,85,247,.38);background:rgba(168,85,247,.08)}
+.ticker-item .tf{font-weight:600}
+.ticker-item .td{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--a3);
+  background:rgba(168,85,247,.11);border:1px solid rgba(168,85,247,.22);padding:2px 8px;border-radius:999px}
+
+/* ══ NAV ══ */
+#arx-nav{position:sticky;top:var(--ticker-h);z-index:5000;width:100%;
+  background:rgba(5,5,5,.93);backdrop-filter:blur(22px);
+  border-bottom:1px solid rgba(255,255,255,.05);box-shadow:0 4px 30px rgba(0,0,0,.45)}
+.nav-inner{max-width:1380px;margin:0 auto;padding:0 40px;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;overflow:visible}
+.nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text);flex:0 0 auto}
+.nav-brand img{height:36px;width:auto;object-fit:contain;filter:drop-shadow(0 0 10px rgba(168,85,247,.35))}
+.nav-brand-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14.5px}
+.nav-brand-sub{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px;letter-spacing:.05em}
+.nav-links{display:flex;align-items:center;gap:0;flex:1;justify-content:center;overflow:visible}
+.nav-dd{position:relative;flex:0 0 auto}
+.nav-dd-btn{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 13px;
+  border-radius:8px;background:transparent;border:1px solid transparent;
+  color:rgba(255,255,255,.68);font-family:'Outfit',sans-serif;font-size:13px;
+  font-weight:500;cursor:pointer;transition:.15s ease;white-space:nowrap}
+.nav-dd-btn:hover,.nav-dd.open .nav-dd-btn{color:#fff;background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.16)}
+.nav-dd-btn svg{width:11px;height:11px;fill:none;stroke:rgba(168,85,247,.8);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease}
+.nav-dd.open .nav-dd-btn svg{transform:rotate(180deg)}
+.nav-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  min-width:210px;background:rgba(9,9,13,.97);border:1px solid rgba(168,85,247,.22);
+  border-radius:14px;box-shadow:0 20px 65px rgba(0,0,0,.70),0 0 40px rgba(168,85,247,.09);
+  padding:6px;display:none;z-index:9999}
+.nav-dd.open .nav-menu{display:block}
+.nav-menu-item{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:9px;
+  color:rgba(255,255,255,.82);text-decoration:none;font-size:13px;font-weight:500;transition:.13s ease;white-space:nowrap}
+.nav-menu-item:hover{background:rgba(168,85,247,.10);color:#fff}
+.nav-menu-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.18);font-size:13px;flex:0 0 auto}
+.nav-menu-sep{height:1px;background:rgba(255,255,255,.06);margin:5px 8px}
+.nav-menu-badge{margin-left:auto;padding:3px 8px;border-radius:999px;
+  background:linear-gradient(135deg,var(--a),var(--a2));font-size:9.5px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.nav-cta{flex:0 0 auto;height:36px;padding:0 18px;border-radius:999px;
+  background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;font-weight:700;font-size:13px;
+  text-decoration:none;display:flex;align-items:center;gap:6px;
+  box-shadow:0 8px 28px rgba(168,85,247,.26);transition:.15s ease}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 14px 40px rgba(168,85,247,.36);filter:brightness(1.05)}
+
+/* ══ HERO ══ */
+.fl-hero{position:relative;z-index:1;padding:80px 40px 60px;text-align:center}
+.fl-chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 14px;
+  border-radius:999px;border:1px solid rgba(168,85,247,.26);background:rgba(168,85,247,.07);
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--a3);margin-bottom:24px}
+.fl-chip .cdot{width:5px;height:5px;border-radius:50%;
+  background:var(--a);box-shadow:0 0 6px var(--a);animation:blink 2s infinite}
+.fl-title{font-family:'Syne',sans-serif;font-size:clamp(38px,6vw,78px);
+  font-weight:800;line-height:1.02;letter-spacing:-.04em;color:#fff;margin-bottom:20px}
+.fl-title .hl{background:linear-gradient(135deg,var(--a3),var(--a),var(--a2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:inline-block;padding-bottom:6px}
+.fl-sub{font-size:16px;color:var(--muted);line-height:1.72;max-width:540px;margin:0 auto}
+
+/* ══ WHO WE ARE ══ */
+.fl-about{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:60px 40px 0}
+.fl-about-card{border:1px solid rgba(168,85,247,.22);border-radius:24px;padding:44px 44px;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(168,85,247,.12) 0%,transparent 65%),rgba(255,255,255,.018);
+  position:relative;overflow:hidden;text-align:center}
+.fl-about-card::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--a),var(--a3),transparent)}
+.fl-about-logo{height:52px;width:auto;margin:0 auto 20px;display:block;
+  filter:drop-shadow(0 0 16px rgba(168,85,247,.35))}
+.fl-about-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.fl-about-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--a3);margin-bottom:20px}
+.fl-about-text{font-size:15px;color:var(--muted);line-height:1.78;max-width:620px;margin:0 auto}
+
+/* ══ SOCIAL LINKS ══ */
+.fl-section{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:50px 40px 0}
+.fl-section-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.fl-section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+
+.fl-links{display:flex;flex-direction:column;gap:10px}
+
+.fl-link{display:flex;align-items:center;gap:16px;padding:16px 20px;
+  border:1px solid rgba(255,255,255,.07);border-radius:16px;
+  background:rgba(255,255,255,.020);text-decoration:none;color:var(--text);
+  transition:.18s ease;position:relative;overflow:hidden}
+.fl-link::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  border-radius:0 2px 2px 0;opacity:0;transition:.18s ease}
+.fl-link:hover{border-color:rgba(168,85,247,.28);background:rgba(168,85,247,.06);
+  transform:translateX(4px)}
+.fl-link:hover::before{opacity:1}
+
+/* platform colors on hover line */
+.fl-link.instagram:hover::before{background:linear-gradient(180deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.fl-link.tiktok:hover::before{background:linear-gradient(180deg,#69C9D0,#EE1D52)}
+.fl-link.youtube:hover::before{background:#FF0000}
+.fl-link.twitter:hover::before{background:#1DA1F2}
+.fl-link.telegram:hover::before{background:#229ED9}
+.fl-link.discord:hover::before{background:#5865F2}
+.fl-link.community:hover::before{background:linear-gradient(180deg,var(--a),var(--a2))}
+
+.fl-link-icon{width:44px;height:44px;border-radius:12px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.fl-link-info{flex:1}
+.fl-link-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:2px}
+.fl-link-handle{font-size:12.5px;color:var(--muted);font-family:'DM Mono',monospace}
+.fl-link-arrow{font-size:18px;color:var(--dim);transition:.18s ease}
+.fl-link:hover .fl-link-arrow{color:var(--a3);transform:translateX(2px)}
+.fl-link-badge{padding:3px 10px;border-radius:999px;font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;flex:0 0 auto}
+.fl-link-badge.live{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.26);color:var(--a3)}
+.fl-link-badge.free{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.22);color:#86efac}
+
+/* ══ CTA BOTTOM ══ */
+.fl-cta-wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:50px 40px 80px;text-align:center}
+.fl-cta-card{border:1px solid rgba(168,85,247,.25);border-radius:22px;padding:44px 36px;
+  background:radial-gradient(ellipse 85% 60% at 50% 0%,rgba(168,85,247,.13) 0%,transparent 65%),rgba(255,255,255,.018);
+  position:relative;overflow:hidden}
+.fl-cta-card::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--a),var(--a3),transparent)}
+.fl-cta-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  color:#fff;letter-spacing:-.02em;margin-bottom:10px}
+.fl-cta-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px;max-width:440px;margin-left:auto;margin-right:auto}
+.fl-cta-btn{display:inline-flex;align-items:center;gap:9px;
+  height:54px;padding:0 32px;border-radius:999px;
+  background:linear-gradient(135deg,var(--a),var(--a2));
+  color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;
+  text-decoration:none;letter-spacing:-.01em;
+  box-shadow:0 12px 40px rgba(168,85,247,.32);transition:.2s ease}
+.fl-cta-btn:hover{transform:translateY(-2px);filter:brightness(1.07);
+  box-shadow:0 20px 55px rgba(168,85,247,.45)}
+
+/* ══ FOOTER ══ */
+.fl-footer{position:relative;z-index:1;
+  border-top:1px solid rgba(255,255,255,.05);padding:32px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;max-width:1380px;margin:0 auto}
+.fl-footer-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.fl-footer-logo img{height:26px;width:auto;filter:drop-shadow(0 0 8px rgba(168,85,247,.25))}
+.fl-footer-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.45)}
+.fl-footer-copy{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim)}
+.fl-footer-links{display:flex;gap:18px}
+.fl-footer-links a{color:var(--dim);text-decoration:none;font-size:11px;font-family:'DM Mono',monospace;transition:.15s ease}
+.fl-footer-links a:hover{color:var(--a3)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fu{opacity:0}.fu.vis{animation:fadeUp .52s cubic-bezier(.25,.8,.25,1) forwards}
+.fu.d1{animation-delay:.04s}.fu.d2{animation-delay:.10s}.fu.d3{animation-delay:.16s}
+.fu.d4{animation-delay:.22s}.fu.d5{animation-delay:.28s}.fu.d6{animation-delay:.34s}
+.fu.d7{animation-delay:.40s}.fu.d8{animation-delay:.46s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  .fl-hero{padding:60px 20px 40px}
+  .fl-about,.fl-section,.fl-cta-wrap{padding-left:20px;padding-right:20px}
+  .fl-about-card{padding:30px 22px}
+  .fl-footer{padding:26px 20px}
+  .nav-inner{height:auto;flex-wrap:wrap;padding:8px 12px;gap:8px}
+  .nav-brand{flex:1 1 auto}
+  .nav-cta{display:none}
+  .nav-links{display:flex!important;flex:0 0 100%;overflow-x:auto!important;
+    overflow-y:visible!important;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;gap:0;justify-content:flex-start;padding-bottom:4px}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-dd-btn{font-size:12px;padding:0 10px;height:32px}
+  .nav-menu{position:fixed!important;left:10px!important;right:10px!important;
+    top:112px!important;transform:none!important;width:auto!important;
+    max-height:60vh!important;overflow-y:auto!important;z-index:2147483647!important}
+  #arx-nav{overflow:visible!important;z-index:2147483647!important}
+  #arx-nav .nav-inner,#arx-nav .nav-dd{overflow:visible!important}
+}
+@media(prefers-reduced-motion:reduce){.ticker-track{animation:none}.fu{opacity:1;animation:none}.dot,.cdot{animation:none}}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<div class="bg-grain"></div>
+<div class="bg-grid"></div>
+
+<!-- ══ TICKER ══ -->
+<div id="arx-ticker">
+  <div class="ticker-inner">
+    <div class="ticker-badge"><span class="dot"></span>LIVE DEALS</div>
+    <div class="ticker-marquee"><div class="ticker-track" id="js-ticker"></div></div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav id="arx-nav">
+  <div class="nav-inner">
+    <a href="https://www.arxpricetime.com" class="nav-brand">
+      <img src="https://i.postimg.cc/fRkFBhcS/ARX-web-logo.png" alt="ARX">
+      <div>
+        <div class="nav-brand-name">ARX | Price &amp; Time</div>
+        <div class="nav-brand-sub">Alpha Range eXecution</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Prop Firms<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://www.arxpricetime.com"><span class="nav-menu-icon">📊</span>Forex Firms</a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com"><span class="nav-menu-icon">📈</span>Futures Firms</a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com"><span class="nav-menu-icon">🔥</span>Today's Deals</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Learn &amp; Access<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/arx-method-full-course/buy" target="_blank"><span class="nav-menu-icon">🎓</span>ARX Full Course<span class="nav-menu-badge">NEW</span></a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/arx-sniper-strategy/buy" target="_blank"><span class="nav-menu-icon">⭐</span>Sniper Strategy</a>
+          <div class="nav-menu-sep"></div>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/the-7-phases-of-a-profitable-trader" target="_blank"><span class="nav-menu-icon">📄</span>7 Phases (Free)</a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/arx-break-even-protocol-pdf-guide" target="_blank"><span class="nav-menu-icon">📄</span>Break-Even (Free)</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Discord<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://discord.gg/FCZxHb4qKA" target="_blank"><span class="nav-menu-icon">💬</span>Join Free</a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/arx-sniper-strategy/buy" target="_blank"><span class="nav-menu-icon">👑</span>Premium Access<span class="nav-menu-badge">ARX</span></a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Follow Us<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://www.instagram.com/arxpricetime" target="_blank"><span class="nav-menu-icon">📸</span>Instagram</a>
+          <a class="nav-menu-item" href="https://www.tiktok.com/@arx_price_time" target="_blank"><span class="nav-menu-icon">🎵</span>TikTok</a>
+          <a class="nav-menu-item" href="https://www.youtube.com/channel/UCbVKn3XHJvl6XAFGC78EcuA" target="_blank"><span class="nav-menu-icon">▶️</span>YouTube</a>
+          <a class="nav-menu-item" href="https://x.com/arxpricetime" target="_blank"><span class="nav-menu-icon">🐦</span>X / Twitter</a>
+          <a class="nav-menu-item" href="https://t.me/ARXPriceTime" target="_blank"><span class="nav-menu-icon">✈️</span>Telegram</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Giveaway 🎁<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/giveaways" target="_blank"><span class="nav-menu-icon">🎁</span>Enter Giveaway<span class="nav-menu-badge">LIVE</span></a>
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/community" target="_blank"><span class="nav-menu-icon">👥</span>Community</a>
+        </div>
+      </div>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Login<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-menu">
+          <a class="nav-menu-item" href="https://www.arxpricetime.com/login"><span class="nav-menu-icon">🔑</span>Member Login</a>
+        </div>
+      </div>
+    </div>
+    <a class="nav-cta" href="https://www.arxpricetime.com/arx-sniper-strategy/buy" target="_blank">Join ARX →</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="fl-hero">
+  <div class="fl-chip fu d1"><span class="cdot"></span>ARX Price &amp; Time · All Platforms</div>
+  <h1 class="fl-title fu d2">Follow ARX.<br><span class="hl">Stay Connected.</span></h1>
+  <p class="fl-sub fu d3">Everything ARX in one place — social media, community, free resources and access to the full trading framework.</p>
+</section>
+
+<!-- ══ WHO WE ARE ══ -->
+<div class="fl-about">
+  <div class="fl-about-card fu d1">
+    <img class="fl-about-logo" src="https://i.postimg.cc/fRkFBhcS/ARX-web-logo.png" alt="ARX">
+    <div class="fl-about-name">ARX | Price &amp; Time</div>
+    <div class="fl-about-tag">Alpha Range eXecution</div>
+    <p class="fl-about-text">ARX is a trading education brand built around one framework — Price & Time Execution. We teach traders how to read market structure, identify liquidity, time their entries and execute with discipline. No indicators, no noise. Just a clear, repeatable process that works across Forex and Futures markets.</p>
+  </div>
+</div>
+
+<!-- ══ SOCIAL MEDIA ══ -->
+<div class="fl-section">
+  <div class="fl-section-title fu d1">Social Media</div>
+  <div class="fl-links">
+
+    <a class="fl-link instagram fu d2" href="https://www.instagram.com/arxpricetime" target="_blank" rel="noopener">
+      <div class="fl-link-icon">📸</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">Instagram</div>
+        <div class="fl-link-handle">@arxpricetime</div>
+      </div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+    <a class="fl-link tiktok fu d3" href="https://www.tiktok.com/@arx_price_time" target="_blank" rel="noopener">
+      <div class="fl-link-icon">🎵</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">TikTok</div>
+        <div class="fl-link-handle">@arx_price_time</div>
+      </div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+    <a class="fl-link youtube fu d4" href="https://www.youtube.com/channel/UCbVKn3XHJvl6XAFGC78EcuA" target="_blank" rel="noopener">
+      <div class="fl-link-icon">▶️</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">YouTube</div>
+        <div class="fl-link-handle">ARX Price &amp; Time</div>
+      </div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+    <a class="fl-link twitter fu d5" href="https://x.com/arxpricetime" target="_blank" rel="noopener">
+      <div class="fl-link-icon">🐦</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">X / Twitter</div>
+        <div class="fl-link-handle">@arxpricetime</div>
+      </div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ══ COMMUNITY ══ -->
+<div class="fl-section" style="padding-top:36px">
+  <div class="fl-section-title fu d1">Community</div>
+  <div class="fl-links">
+
+    <a class="fl-link discord fu d2" href="https://discord.gg/FCZxHb4qKA" target="_blank" rel="noopener">
+      <div class="fl-link-icon">💬</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">Discord — Join Free</div>
+        <div class="fl-link-handle">Daily analysis · trade ideas · ARX community</div>
+      </div>
+      <div class="fl-link-badge free">Free</div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+    <a class="fl-link telegram fu d3" href="https://t.me/ARXPriceTime" target="_blank" rel="noopener">
+      <div class="fl-link-icon">✈️</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">Telegram</div>
+        <div class="fl-link-handle">ARX announcements &amp; updates</div>
+      </div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+    <a class="fl-link community fu d4" href="https://www.arxpricetime.com/arx-community-free/buy?offer_id=5463360" target="_blank" rel="noopener">
+      <div class="fl-link-icon">👥</div>
+      <div class="fl-link-info">
+        <div class="fl-link-name">ARX Community Board</div>
+        <div class="fl-link-handle">Weekly outlooks · trade breakdowns · verified results</div>
+      </div>
+      <div class="fl-link-badge free">Free</div>
+      <div class="fl-link-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ══ CTA ══ -->
+<div class="fl-cta-wrap">
+  <div class="fl-cta-card fu d1">
+    <div class="fl-cta-title">Ready to Learn the ARX Method?</div>
+    <p class="fl-cta-sub">Access the full trading framework — courses, community and live execution content built around Price & Time.</p>
+    <a class="fl-cta-btn" href="https://www.arxpricetime.com/arx-method-full-course/buy" target="_blank" rel="noopener">
+      Access ARX Courses →
+    </a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="fl-footer">
+    <a class="fl-footer-logo" href="https://www.arxpricetime.com">
+      <img src="https://i.postimg.cc/fRkFBhcS/ARX-web-logo.png" alt="ARX">
+      <span class="fl-footer-name">ARX | Price &amp; Time</span>
+    </a>
+    <div class="fl-footer-copy">© <span id="js-year"></span> ARX | Price &amp; Time · All rights reserved.</div>
+    <div class="fl-footer-links">
+      <a href="https://www.arxpricetime.com/disclaimer" target="_blank">Disclaimer</a>
+      <a href="https://www.arxpricetime.com/refund-policy" target="_blank">Refund Policy</a>
+      <a href="https://www.arxpricetime.com" target="_blank">Back to Site</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const track=document.getElementById('js-ticker');
+  if(track){
+    const items=[
+      {firm:'APEX Trader Funding',disc:'90% OFF',url:'https://apextraderfunding.com/'},
+      {firm:'Take Profit Trader',disc:'40% OFF',url:'https://takeprofittrader.com/'},
+      {firm:'Lucid Trading',disc:'40% OFF',url:'https://lucidtrading.com/'},
+      {firm:'FTMO',disc:'19% OFF',url:'https://trader.ftmo.com/?affiliates=rHueIgOUyaggDZhPGJBS'},
+      {firm:'FXIFY',disc:'28% + 10% OFF',url:'https://trader.fxify.com/purchasechallenge?affiliateId=5621'},
+      {firm:'The5ers',disc:'5% OFF',url:'https://www.the5ers.com/?afmc=sca'},
+    ];
+    const h=items.map(d=>`<a class="ticker-item" href="${d.url}" target="_blank" rel="noopener"><span class="tf">${d.firm}</span><span class="td">${d.disc}</span></a>`).join('');
+    track.innerHTML=h+h+h;
+  }
+  const yr=document.getElementById('js-year');
+  if(yr)yr.textContent=new Date().getFullYear();
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.08});
+  document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+  function toggleDD(dd){
+    const open=dd.classList.contains('open');
+    document.querySelectorAll('.nav-dd.open').forEach(o=>o.classList.remove('open'));
+    if(!open)dd.classList.add('open');
+  }
+  document.querySelectorAll('.nav-dd').forEach(dd=>{
+    const btn=dd.querySelector('.nav-dd-btn');
+    btn.addEventListener('click',e=>{e.stopPropagation();toggleDD(dd)});
+    btn.addEventListener('touchend',e=>{e.preventDefault();e.stopPropagation();toggleDD(dd)},{passive:false});
+  });
+  document.addEventListener('click',()=>document.querySelectorAll('.nav-dd.open').forEach(o=>o.classList.remove('open')));
+  document.addEventListener('touchend',e=>{if(!e.target.closest('.nav-dd'))document.querySelectorAll('.nav-dd.open').forEach(o=>o.classList.remove('open'))},{passive:true});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.nav-dd.open').forEach(o=>o.classList.remove('open'))});
+})();
+</script>
+</body>
+</html>
